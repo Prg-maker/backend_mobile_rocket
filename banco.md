@@ -5,7 +5,7 @@
 - [] istalar o fastify
     [] fazer a configuraçao do fastify
 
-- [] istalar o prima
+- [] istalar o prisma
     [] definir o banco de dados
         > user
             >> id
