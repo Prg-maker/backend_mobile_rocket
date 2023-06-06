@@ -1,12 +1,12 @@
 # banco
 
-- [] fazer o sever
+- [x] fazer o sever
 
-- [] istalar o fastify
+- [x] istalar o fastify
     [] fazer a configuraçao do fastify
 
-- [] istalar o prisma
-    [] definir o banco de dados
+- [x] istalar o prisma
+    [x] definir o banco de dados
         > user
             >> id
             >> email
@@ -14,6 +14,7 @@
 
         > activy
             >> id
+            >> userId
             >> name
             >> content
             >> solution
