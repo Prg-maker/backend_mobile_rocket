@@ -17,6 +17,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@fastify/jwt": "^7.0.0",
     "@fastify/multipart": "^7.6.0",
     "@prisma/client": "^4.15.0",
     "axios": "^1.4.0",

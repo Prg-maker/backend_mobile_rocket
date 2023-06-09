@@ -1,11 +1,18 @@
 import Fastify from 'fastify'
 import multipart from '@fastify/multipart'
-import {authRoutes} from './routes/auth'
-const fastify = Fastify()
-fastify.register(multipart)
+import {authRoutes} from './routes/auth'    
+import jwt from '@fastify/jwt'
 
-fastify.register(authRoutes)
 
-fastify.listen({port:3333 , host:'0.0.0.0'} , (adress , error) =>{
+const app = Fastify()
+
+app.register(multipart)
+app.register(authRoutes)
+
+app.register(jwt, {
+    secret: 'secret_key'
+})
+
+app.listen({port:3333 , host:'0.0.0.0'} , (adress , error) =>{
     console.log("server is running: ")
 })

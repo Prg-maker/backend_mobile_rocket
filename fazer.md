@@ -1,2 +1,2 @@
-# gerar token
-# verificaçao de email valido
+# gerar token [x] 
+# verificaçao de email valido [x] 

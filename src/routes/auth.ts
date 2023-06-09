@@ -1,6 +1,7 @@
 import {FastifyInstance} from 'fastify'
 import {prisma} from '../libs/prisma'
 import z from 'zod'
+import { emailVerification } from '../libs/email-verification'
 
 export async function authRoutes(app:FastifyInstance){
   app.post('/register' , async (request, reply)=> {
@@ -10,6 +11,10 @@ export async function authRoutes(app:FastifyInstance){
     })
 
     const {email, password} = bodySchema.parse(request.body)
+
+    const email_Validate =  emailVerification(user?.email)
+
+    if(email_Validate) return reply.status(400).send("Email invalid")
 
     const user = await prisma.user.findFirst({
       where:{
@@ -27,7 +32,17 @@ export async function authRoutes(app:FastifyInstance){
       return reply.status(400).send("password incorrect")
     }
 
-    return reply.status(201).send()
+    const token = app.jwt.sign({
+      email: user?.email,
+    }, {
+      sub: user?.id,
+      expiresIn: '2d'
+    })
+
+    
+
+    return {token}
+
 
   })
 }
