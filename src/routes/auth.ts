@@ -10,11 +10,13 @@ export async function authRoutes(app:FastifyInstance){
       password:z.string()
     })
 
+  
+
     const {email, password} = bodySchema.parse(request.body)
 
-    const email_Validate =  emailVerification(user?.email)
+    const email_Validate =  emailVerification(email)
 
-    if(email_Validate) return reply.status(400).send("Email invalid")
+    if(email_Validate == false) return reply.status(400).send("Email invalid")
 
     const user = await prisma.user.findFirst({
       where:{

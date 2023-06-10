@@ -21,10 +21,10 @@ model Activity {
   id           String   @id @default(uuid())
   asset_number Int      @unique
   description  String
-  solution     String
+  solution     String?
   is_finished  Boolean  @default(false)
   create_at    DateTime @default(now())
-  update_at    DateTime @updatedAt
+  update_at    DateTime @default(now()) @updatedAt()
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
