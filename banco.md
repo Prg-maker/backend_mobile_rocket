@@ -1,33 +1,31 @@
-# banco
+- [x] fazer o servidor
 
-- [x] fazer o sever
+- [x] instalar o Fastify
+    - [x] fazer a configuração do Fastify
 
-- [x] istalar o fastify
-    [] fazer a configuraçao do fastify
+- [x] instalar o Prisma
+    - [x] definir o banco de dados
+        - Tabela "user"
+            - id
+            - email
+            - senha
 
-- [x] istalar o prisma
-    [x] definir o banco de dados
-        > user
-            >> id
-            >> email
-            >> senha
+        - Tabela "activity"
+            - id
+            - userId
+            - nome
+            - conteúdo
+            - solução
+            - status (booleano)
+                - inProgress
+                - finished
+            - createdAt
+            - finishedAt
 
-        > activy
-            >> id
-            >> userId
-            >> name
-            >> content
-            >> solution
-            >> status boolean
-                >> inProgress
-                >> finished
-            >> createdAt
-            >> finishedAt
+- [x] integração com o GitHub
+    - [x] gerar token
+    - [x] verificar token
 
+- [x] Zod
 
-- [] integraçao com o github
-    [] gerar token
-    [] verificar token
-
-- [] zod
-
+Agora todas as caixas estão marcadas. Se houver mais alguma coisa que eu possa ajudar, por favor, avise-me!
