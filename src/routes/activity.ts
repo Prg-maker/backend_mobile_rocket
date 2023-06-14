@@ -1,6 +1,6 @@
 import {FastifyInstance} from 'fastify'
 import { prisma } from '../libs/prisma'
-import z from 'zod'
+import z, { string } from 'zod'
 
 export async function activityRoutes(app:FastifyInstance){
 
@@ -34,8 +34,25 @@ export async function activityRoutes(app:FastifyInstance){
     })
 
     // Rota para buscar uma atividade específica com base no seu ID
-    app.get( '/activity/:id', (request, reply) => {
+    app.get( '/activity/:id', async (request, reply) => {
+      const paramsSchema = z.object({
+        id: z.string().uuid()  
+      })
 
+      const {id} = paramsSchema.parse(request.params)
+
+
+
+      
+      const activity = await prisma.activity.findUniqueOrThrow({
+        where:{
+          id,
+        }
+      })
+
+      if(activity.userId != request.user.sub)return reply.status(401).send()
+
+      return activity
     })
 
     // Rota para criar uma nova atividade
@@ -74,7 +91,42 @@ export async function activityRoutes(app:FastifyInstance){
     })
 
     // Rota para atualizar uma atividade existente com base no seu ID
-    app.put("/activity/:id", (request , reply)=> {
+    app.put("/activity/:id",async  (request , reply)=> {
+      const paramsSchema = z.object({
+        id:z.string(),
+      })
+      
+      const {id}  = paramsSchema.parse(request.params)
+
+      const bodySchema = z.object({
+        solution: z.string(),
+        is_finished: z.coerce.boolean()
+      })
+
+      const {is_finished, solution} = bodySchema.parse(request.body)
+
+      let activityUpdate = await prisma.activity.findUniqueOrThrow({
+        where:{
+          id
+        }
+      }) 
+      
+      if(activityUpdate.userId != request.user.sub) return reply.status(401).send()
+      if(is_finished== false)return reply.status(403).send({
+        message: "Error ao atulizar, tente novamente"
+      })
+      activityUpdate = await prisma.activity.update({
+        where:{
+          id
+        },
+        data:{
+          is_finished,
+          solution
+        }
+      })
+
+      return activityUpdate
+
 
     })
 }
